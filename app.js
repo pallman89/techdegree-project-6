@@ -6,6 +6,7 @@ let phrase = document.getElementById('phrase');
 let missed = 0;
 let startGame = document.getElementById('overlay');
 let phraseList = document.querySelector('#phrase ul');
+let letters = document.getElementsByClassName('letter');
 
 
 
@@ -16,26 +17,28 @@ startGame.addEventListener('click', () => {
 
 // Phrases
 let phrases = [
-    "My name is Patrick",
-    "I quit my full time job to become a frontend developer",
-    "I love to play golf", 
-    "I currently call Phoenix home",
-    "The Treehouse commmunity has been so helpful"
+    "Lets Go Blues",
+    "Stanley Cup Champions",
+    "Brett Hull is a Legend", 
+    "St Louis Blues Hockey",
+    "He shoots he scores",
+    "Cross Checking",
+    "Off the post",
+    "Slap shot",
+    "Wrist shot"
 ]
 
 //Phrase generator
 
 function getRandomPhraseAsArray(arr) {
     const random = arr[Math.floor(Math.random() * arr.length)];
-    return random.split();
+    return random.split('');
 
 }
 
 getRandomPhraseAsArray(phrases);
 const phraseArray = getRandomPhraseAsArray(phrases);
-
-
-
+console.log(phraseArray);
 
 
 function addPhraseToDisplay(arr)  {
@@ -44,15 +47,42 @@ function addPhraseToDisplay(arr)  {
             listItem.textContent = arr[i];
             phraseList.appendChild(listItem);
          
-            if (listItem.textContent != " "){
-                listItem.className = "letter"
+            if (listItem.textContent !== " "){
+                listItem.className = "letter";
             } else {
-                listItem.className = "space"
+                listItem.className = "space";
             }
     }
 }
 
+// Called phrase function
 addPhraseToDisplay(phraseArray);
+
+
+// CheckLetter Function
+
+function checkLetter (guessBtn){
+    let guess = guessBtn.textContent;
+    let match = null;
+    for(i = 0; i < letters.length; i++){
+        if (letters[i].textContent === guess){
+            letters[i].className += "show";
+            match = letters[i].textContent;
+        } 
+
+    }
+    return match;
+}
+
+
+qwerty.addEventListener('click', (e) => {
+    let guessBtn = event.target;
+    guessBtn.className = "chosen";
+    guessBtn.disabled = true;
+
+    const letterFound = checkLetter;
+    
+});
 
 
 
