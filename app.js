@@ -6,7 +6,9 @@ let phrase = document.getElementById('phrase');
 let missed = 0;
 let startGame = document.getElementById('overlay');
 let phraseList = document.querySelector('#phrase ul');
-let letters = document.getElementsByClassName('letter');
+const letters = document.querySelectorAll('.letter');
+const keyboard = document.querySelector('#qwerty');
+const misses = document.querySelectorAll('images');
 
 
 
@@ -61,26 +63,29 @@ addPhraseToDisplay(phraseArray);
 
 // CheckLetter Function
 
-function checkLetter (guessBtn){
-    let guess = guessBtn.textContent;
-    let match = null;
-    for(i = 0; i < letters.length; i++){
-        if (letters[i].textContent === guess){
-            letters[i].className += "show";
-            match = letters[i].textContent;
-        } 
+const checkLetter = button => {
+    let matched = null;
 
+    letters.forEach(letter => {
+        if(button === letter.textContent.toLowerCase()){
+            letter.classList.add('show');
+            matched = true;
+        }
+    });
+    
+    return matched;
+};
+
+
+keyboard.addEventListener('click', event => {
+    if (event.target.tagName === "BUTTON"){
+        event.target.className = 'chosen';
+        event.target.disabled = true;
+        const match = checkLetter(event.target.textContent.toLowerCase());
+        if(!match){
+            missed++;
+        }
     }
-    return match;
-}
-
-
-qwerty.addEventListener('click', (e) => {
-    let guessBtn = event.target;
-    guessBtn.className = "chosen";
-    guessBtn.disabled = true;
-
-    const letterFound = checkLetter;
     
 });
 
