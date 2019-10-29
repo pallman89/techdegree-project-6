@@ -7,7 +7,7 @@ let missed = 0;
 let gameOverlay = document.getElementById('overlay');
 let phraseList = document.querySelector('#phrase ul');
 const keyboard = document.querySelector('#qwerty');
-
+let tries = document.getElementsByClassName('tries');
 
 
 // Game start button
@@ -87,6 +87,7 @@ keyboard.addEventListener('click', event => {
             missed++;
             const img = document.querySelectorAll("img");
             img[missed - 1].src="images/lostHeart.png";
+           
         }
     }
     checkWin();
@@ -101,7 +102,7 @@ const checkWin = () => {
     const letters = document.querySelectorAll('.letter');
     if (guess.length === letters.length) {
         gameOverlay.className = 'win'; 
-        gameOverlay.style.display = 'initial';
+        gameOverlay.style.display = "";
         gameOverlay.innerHTML = '<h1>YOU WON THE GAME!!!</h1>'
         let resetBtn = document.createElement('a');
         resetBtn.className = "btn__reset";
@@ -115,7 +116,7 @@ const checkWin = () => {
     } else if (missed >= 5) {
 
         gameOverlay.className = 'lose';
-        gameOverlay.style.display = 'initial';
+        gameOverlay.style.display = "";
         gameOverlay.innerHTML = '<h1>SORRY, YOU LOSE...</h1>';
         let resetBtn = document.createElement('a');
         resetBtn.className = "btn__reset";
