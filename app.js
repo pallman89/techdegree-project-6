@@ -4,43 +4,39 @@
 let qwerty = document.getElementById('qwerty');
 let phrase = document.getElementById('phrase');
 let missed = 0;
-let startGame = document.getElementById('overlay');
+let gameOverlay = document.getElementById('overlay');
 let phraseList = document.querySelector('#phrase ul');
-const letters = document.querySelectorAll('.letter');
 const keyboard = document.querySelector('#qwerty');
-const misses = document.querySelectorAll('images');
 
 
 
-startGame.addEventListener('click', () => {
-    startGame.style.display = 'none'
+// Game start button
+gameOverlay.addEventListener('click', () => {
+    gameOverlay.style.display = 'none'
 });
 
 
 // Phrases
 let phrases = [
-    "Lets Go Blues",
-    "Stanley Cup Champions",
-    "Brett Hull is a Legend", 
-    "St Louis Blues Hockey",
-    "He shoots he scores",
-    "Cross Checking",
-    "Off the post",
-    "Slap shot",
-    "Wrist shot"
+    "LETS GO BLUES",
+    "STANLEY CUP CHAMPIONS",
+    "ST LOUIS BLUES HOCKEY",
+    "CROSS CHECKING",
+    "OFF THE POST",
+    "SLAP SHOT",
+    "WRIST SHOT"
 ]
 
 //Phrase generator
-
 function getRandomPhraseAsArray(arr) {
     const random = arr[Math.floor(Math.random() * arr.length)];
     return random.split('');
 
 }
 
-getRandomPhraseAsArray(phrases);
+//Calling the random phrase function
 const phraseArray = getRandomPhraseAsArray(phrases);
-console.log(phraseArray);
+
 
 
 function addPhraseToDisplay(arr)  {
@@ -65,6 +61,7 @@ addPhraseToDisplay(phraseArray);
 
 const checkLetter = button => {
     let matched = null;
+    const letters = document.querySelectorAll('.letter');
 
     letters.forEach(letter => {
         if(button === letter.textContent.toLowerCase()){
@@ -73,26 +70,65 @@ const checkLetter = button => {
         }
     });
     
-    return matched;
+     return matched;
 };
 
+
+
+// KEYBOARD EVENT LISTENER
 
 keyboard.addEventListener('click', event => {
     if (event.target.tagName === "BUTTON"){
         event.target.className = 'chosen';
         event.target.disabled = true;
-        const match = checkLetter(event.target.textContent.toLowerCase());
-        if(!match){
+    
+        const letterFound = checkLetter(event.target.textContent.toLowerCase());
+        if(!letterFound){
             missed++;
+            const img = document.querySelectorAll("img");
+            img[missed - 1].src="images/lostHeart.png";
         }
     }
-    
+    checkWin();
 });
 
 
 
+// CHECK WIN FUNCTION
 
+const checkWin = () => {
+    let guess = document.querySelectorAll('.show');
+    const letters = document.querySelectorAll('.letter');
+    if (guess.length === letters.length) {
+        gameOverlay.className = 'win'; 
+        gameOverlay.style.display = 'initial';
+        gameOverlay.innerHTML = '<h1>YOU WON THE GAME!!!</h1>'
+        let resetBtn = document.createElement('a');
+        resetBtn.className = "btn__reset";
+        gameOverlay.appendChild(resetBtn);
+        resetBtn.textContent = "Play Again";
 
+        resetBtn.addEventListener ('click', () => {
+            window.location.reload(true);
+        });
+        
+    } else if (missed >= 5) {
+
+        gameOverlay.className = 'lose';
+        gameOverlay.style.display = 'initial';
+        gameOverlay.innerHTML = '<h1>SORRY, YOU LOSE...</h1>';
+        let resetBtn = document.createElement('a');
+        resetBtn.className = "btn__reset";
+        gameOverlay.appendChild(resetBtn);
+        resetBtn.textContent = "Play Again";
+
+        resetBtn.addEventListener ('click', () => {
+            window.location.reload(true);
+        });
+        
+    }
+
+};
 
 
 

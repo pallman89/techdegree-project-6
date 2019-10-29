@@ -53,6 +53,14 @@ button {
   -webkit-transition: var(--transition);
   -o-transition: var(--transition);
   transition: var(--transition);
+  box-shadow: 0 6px #999;
+}
+
+button:active , 
+.btn__reset:active {
+  
+  box-shadow: 0 2px #666;
+  transform: translateY(4px);
 }
 
 .main-container {
@@ -88,6 +96,8 @@ button {
   border-radius: 5px;
 }
 
+
+
 .space {
   width: 15px;
 }
@@ -95,13 +105,17 @@ button {
 .show {
   color: #000;
   background-color: #76CE82;
+ 
 }
+
+
 
 /* Keyboard */
 
 .keyrow {
   display: flex;
   justify-content: center;
+  
 }
 
 .chosen {
@@ -109,6 +123,8 @@ button {
   border-radius: 5px;
   font-size: var(--font-size-medium);
   color: #FFFFFF;
+  
+  
 }
 
 .btn__reset {
@@ -117,6 +133,7 @@ button {
   background: #FFFFFF;
   border-radius: 5px;
   font-size: var(--font-size-medium);
+  box-shadow: 0 6px #999;
 }
 
 /* Overlay */
